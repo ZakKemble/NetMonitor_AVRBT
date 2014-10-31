@@ -1,5 +1,11 @@
-2013-01-09:
-	- Initial release
+2014-10-31:
+	Router program:
+	- Support for USB bluetooth adapters (rfcomm)
+	- Support for non-point-to-point interfaces
+	- Can manually set sync rates
+
+	Net Monitor:
+	- Now shows speeds in MBps with 1 decimal place (0.0 - 99.9MBps)
 
 2013-08-17:
 	- Version 2!
@@ -8,3 +14,6 @@
 	- New router program, now written in C, much more efficient than the old shell script
 	- New host program, written in C# .NET and uses LibUsbDotNet. Still in early development, but allows image uploading, drawing and controlling display brightness
 	- Added a bootloader (USBaspLoader) for easy firmware updating over USB
+
+2013-01-09:
+	- Initial release

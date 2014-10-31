@@ -9,18 +9,7 @@
 // http://www.guyrutenberg.com/2007/09/22/profiling-code-using-clock_gettime/
 // http://www.gnu.org/software/libc/manual/html_node/Elapsed-Time.html
 
-#define _BSD_SOURCE
-#define _POSIX_C_SOURCE 200809L
-
-#include <stdint.h>
-#include <pthread.h>
-#include <oping.h>
-#include <time.h>
-#include <net/if.h>
-#include <netdb.h>
-#include "typedefs.h"
-#include "ping.h"
-#include "config.h"
+#include "common.h"
 
 static void* thread(void*);
 
@@ -50,10 +39,8 @@ void ping_init()
 	ping_setopt(oping, PING_OPT_DEVICE, interface);
 	//ping_setopt(oping, PING_OPT_SOURCE, "");
 
-	if(interface)
-		free(interface);
-	if(strLossTime)
-		free(strLossTime);
+	free(interface);
+	free(strLossTime);
 
 /*
 	ping_send(oping);

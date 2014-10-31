@@ -6,16 +6,7 @@
  * Web: http://blog.zakkemble.co.uk/bluetooth-net-monitor-v2/
  */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <curl/curl.h>
-#include <pthread.h>
-#include <regex.h>
-//#include <syslog.h>
-#include "typedefs.h"
-#include "updater.h"
-#include "config.h"
+#include "common.h"
 
 #define CURL_TRIES		4
 #define CURL_TIMEOUT	4
@@ -96,6 +87,8 @@ void updater_run(s_updateData* data)
 {
 	time_t now;
 	time(&now);
+
+	// Is it time for an update and has the previous update thread finished?
 	if(now - data->lastUpdate > data->interval && !data->threadBusy)
 	{
 		data->lastUpdate = now;
@@ -104,35 +97,53 @@ void updater_run(s_updateData* data)
 	}
 }
 
+// Convert regex match from string to ulong
 ulong updater_getMatchNum(regmatch_t* match, s_memoryChunk* chunk)
 {
+	// Regex match section length
 	size_t size = match->rm_eo - match->rm_so;
+
+	// Make buffer
 	char buff[size + 1];
+
+	// Copy section to buffer
 	memcpy(buff, chunk->memory + match->rm_so, size);
-	buff[size] = 0x00; // Make sure theres a NULL terminator
+
+	// Make sure theres a NULL terminator
+	buff[size] = 0x00;
+
+	// Convert buffer to ulong and return value
 	return strtoul(buff, NULL, 10);
 }
 
+// Update thread
 static void* thread(void* arg)
 {
+	// Automatically release thread resources when thread finishes
 	pthread_detach(pthread_self());
 
 	s_updateData* data = (s_updateData*)arg;
 
+	// Allocate some memory for received data
 	s_memoryChunk chunk;
 	chunk.memory = calloc(1, 1);
 	chunk.size = 0;
 
+	// Where to write received data to (the allocated memory)
 	curl_easy_setopt(data->c, CURLOPT_WRITEDATA, (void*)&chunk);
 
 	CURLcode res;
 
-	for(byte i=0;i<CURL_TRIES;i++)
+	for(byte i=0;i<CURL_TRIES;i++) // Retry a few times
 	{
+		// Do request
 		res = curl_easy_perform(data->c);
 
+		// Everything went OK
 		if(res == CURLE_OK)
 			break;
+
+		// Timeout or something happened
 
 		fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
 //		syslog(LOG_DAEMON | LOG_WARNING, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
@@ -147,7 +158,7 @@ static void* thread(void* arg)
 		chunk.memory[0] = 0x00;
 	}
 
-	// Everything OK
+	// Everything OK, run function for parsing data
 	if(res == CURLE_OK)
 		data->dataReadyCallback(&chunk);
 
@@ -161,6 +172,7 @@ static void* thread(void* arg)
 	return 0;
 }
 
+// Called by cURL whenever it receives some data
 static size_t WriteMemoryCallback(char* contents, size_t size, size_t nmemb, void* userp)
 {
 	size_t realsize = size * nmemb;

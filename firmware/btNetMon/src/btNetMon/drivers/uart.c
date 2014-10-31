@@ -1,13 +1,10 @@
 /* * Project: Bluetooth Net Monitor * Author: Zak Kemble, contact@zakkemble.co.uk * Copyright: (C) 2013 by Zak Kemble * License: GNU GPL v3 (see License.txt) * Web: http://blog.zakkemble.co.uk/bluetooth-net-monitor-v2/ */
 
 #include "common.h"
+
 #define BAUD CFG_BAUD
 
-#include <avr/io.h>
-#include <avr/interrupt.h>
 #include <util/setbaud.h>
-#include <stdio.h>
-#include "drivers/uart.h"
 
 #define UART_ENABLE_TX	0
 #define UART_RXBUFFSIZE 22
@@ -28,7 +25,7 @@ static volatile s_ringBuffer rxBuffer;
 void uart_init()
 {
 	// Pullup on RXD
-	pinPullup(D0, PULLUP_ENABLE);
+	pinPullup(D0, PU_EN);
 
 	// UART settings
 	UBRR0 = UBRR_VALUE;
@@ -49,7 +46,7 @@ void uart_init()
 
 // Get next value
 bool uart_get_nb(byte* b)
-{
+{// THIS NEEDS TO BE ATOMIC! (disable UART rx ISR then enable again)
 	// Empty
 	if(rxBuffer.head == rxBuffer.tail)
 		return false;
@@ -64,7 +61,7 @@ bool uart_get_nb(byte* b)
 #if UART_ENABLE_TX
 static int put(char c, FILE* stream)
 {
-	(void)(stream); // Get rid of unused variable warning
+	UNUSED(stream); // Get rid of unused variable warning
 	loop_until_bit_is_set(UCSR0A, UDRE0);
 	UDR0 = c;
 	return 0;

@@ -663,6 +663,11 @@ int __attribute__((__noreturn__)) main(void)
 #	endif
 	wdt_disable();    /* main app may have enabled watchdog */
 #endif
+
+		// Wait for user to let go of the button
+		while(bootLoaderCondition());
+		_delay_ms(100);
+
         initForUsbConnectivity();
         do{
             usbPoll();

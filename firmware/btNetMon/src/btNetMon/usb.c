@@ -1,11 +1,6 @@
 /* * Project: Bluetooth Net Monitor * Author: Zak Kemble, contact@zakkemble.co.uk * Copyright: (C) 2013 by Zak Kemble * License: GNU GPL v3 (see License.txt) * Web: http://blog.zakkemble.co.uk/bluetooth-net-monitor-v2/ */
 
-#include "usb.h"
-#include "usbdrv/usbdrv.h"
-#include "display.h"
-#include "devices/lcd.h"
-#include "drivers/spi.h"
-#include "btNetMon.h"
+#include "common.h"
 
 #define USB_REQ_IMAGE		1
 #define USB_REQ_DRAW		2

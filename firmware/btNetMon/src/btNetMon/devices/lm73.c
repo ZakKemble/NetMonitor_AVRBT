@@ -1,12 +1,7 @@
 /* * Project: Bluetooth Net Monitor * Author: Zak Kemble, contact@zakkemble.co.uk * Copyright: (C) 2013 by Zak Kemble * License: GNU GPL v3 (see License.txt) * Web: http://blog.zakkemble.co.uk/bluetooth-net-monitor-v2/ */
 
-#include <avr/io.h>
-#include <avr/pgmspace.h>
-#include <stdio.h>
 #include "common.h"
-#include "devices/lm73.h"
 #include "devices/lm73_defs.h"
-#include "drivers/i2c.h"
 
 //#define TEMP_OFFSET	8
 

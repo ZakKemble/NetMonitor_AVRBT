@@ -3,8 +3,6 @@
 #ifndef I2C_H_
 #define I2C_H_
 
-#include "typedefs.h"
-
 #define I2C_NACK	false
 #define I2C_ACK		true
 

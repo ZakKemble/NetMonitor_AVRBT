@@ -5,45 +5,49 @@
 
 #include <stdbool.h>
 #include <stdint.h>
-#include "config.h"
 
-typedef unsigned char byte;
-typedef unsigned long ulong;
-typedef unsigned int uint;
+typedef uint8_t byte;
+typedef uint32_t ulong;
+typedef uint16_t uint;
 
 typedef struct{
-	uint up;
-	uint down;
+	uint8_t whole;
+	uint8_t frac;
+}wholeFrac_s;
+
+typedef struct{
+	uint32_t up;
+	uint32_t down;
 }s_netUpDown;
 
 typedef struct{
 	s_netUpDown sync;
 	s_netUpDown rate;
 	s_netUpDown maxRate;
-	uint ping;
-	byte loss;
+	uint16_t ping;
+	uint8_t loss;
 	uint32_t ip;
 }s_netData;
 
 typedef struct{
-	byte down;
-	byte up;
+	uint8_t down;
+	uint8_t up;
 //	byte ping;
 //	byte loss;
 }s_netHistory;
 
 typedef struct{
-	byte width;
-	byte height;
-	uint size;
-	byte offset;
-	const byte* font;
+	uint8_t width;
+	uint8_t height;
+	uint16_t size;
+	uint8_t offset;
+	const uint8_t* font;
 }s_font;
 
 typedef struct{
-	byte r;
-	byte g;
-	byte b;
+	uint8_t r;
+	uint8_t g;
+	uint8_t b;
 }s_rgb;
 
 typedef struct{
@@ -53,7 +57,7 @@ typedef struct{
 }s_colour;
 
 typedef union{
-	uint word;
+	uint16_t word;
 	byte bytes[2];
 }s_pixel;
 

@@ -3,9 +3,6 @@
 #ifndef LCD_H_
 #define LCD_H_
 
-#include <avr/io.h>
-#include "common.h"
-
 #define LCD_WIDTH 160
 #define LCD_HEIGHT 128
 

@@ -1,15 +1,6 @@
 /* * Project: Bluetooth Net Monitor * Author: Zak Kemble, contact@zakkemble.co.uk * Copyright: (C) 2013 by Zak Kemble * License: GNU GPL v3 (see License.txt) * Web: http://blog.zakkemble.co.uk/bluetooth-net-monitor-v2/ */
 
-#include <avr/io.h>
-#include <stdlib.h>
 #include "common.h"
-#include "display.h"
-#include "devices/lcd.h"
-#include "resources.h"
-#include "draw.h"
-#include "views/mode1.h"
-#include "views/mode2.h"
-#include "millis/millis.h"
 
 static bool forceRedraw;
 static bool doBlank;

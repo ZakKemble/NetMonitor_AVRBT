@@ -1,12 +1,6 @@
 /* * Project: Bluetooth Net Monitor * Author: Zak Kemble, contact@zakkemble.co.uk * Copyright: (C) 2013 by Zak Kemble * License: GNU GPL v3 (see License.txt) * Web: http://blog.zakkemble.co.uk/bluetooth-net-monitor-v2/ */
 
-#include <avr/io.h>
-#include <util/delay.h>
-#include <string.h>
 #include "common.h"
-#include "devices/bluetooth.h"
-#include "drivers/uart.h"
-#include "millis/millis.h"
 
 // RST should only be input Hi-Z (normal operation) or output LOW (reset), never PULLUP or HIGH
 // Bluetooth RST pin is pulled up to 1.8V, PULLUP/HIGH will apply 5V which will probably be bad
@@ -16,7 +10,7 @@
 #define KEY	C0
 
 #define SYNC_TO_USABLE(sync)	(sync * ((CFG_ADSL_USABLE / 100.0) / 8))
-#define NETDATA_PACKET_SIZE		22
+#define NETDATA_PACKET_SIZE		30
 #define DATA_TIMEOUT			400
 
 #define capVal(data, val) if(data > val){data = val;}
@@ -91,10 +85,10 @@ void bluetooth_update(s_monitorData* monitorData)
 static void parsePacket(s_netData* netData, s_monitorData* monitorData)
 {
 	// Read buffer data
-	readPacket(&netData->sync.down,		2);
-	readPacket(&netData->sync.up,		2);
-	readPacket(&netData->rate.down,		2);
-	readPacket(&netData->rate.up,		2);
+	readPacket(&netData->sync.down,		4);
+	readPacket(&netData->sync.up,		4);
+	readPacket(&netData->rate.down,		4);
+	readPacket(&netData->rate.up,		4);
 	readPacket(&netData->ping,			2);
 	readPacket(&netData->loss,			1);
 	readPacket(&netData->ip,			4);
@@ -107,10 +101,10 @@ static void parsePacket(s_netData* netData, s_monitorData* monitorData)
 	readPacket(&monitorData->time.year,	1);
 
 	// Make sure values are suitable
-	capVal(netData->sync.down,		9999);
-	capVal(netData->sync.up,		9999);
-	capVal(netData->rate.down,		999);
-	capVal(netData->rate.up,		999);
+	capVal(netData->sync.down,		99999);
+	capVal(netData->sync.up,		99999);
+	capVal(netData->rate.down,		99999);
+	capVal(netData->rate.up,		99999);
 	capVal(netData->ping,			999);
 	capVal(netData->loss,			99);
 	capVal(monitorData->time.hour,	23);
@@ -147,9 +141,9 @@ static void setNetData(s_netData* netData, s_monitorData* monitorData)
 	byte idx = monitorData->netHistoryIdx;
 	memset(&monitorData->netHistory[idx], 0, sizeof(s_netHistory));
 	if(maxRate.down > 0)
-		monitorData->netHistory[idx].down	= remapInt(limitVal(netData->rate.down, 0, maxRate.down), 0, maxRate.down, 0, 255);
+		monitorData->netHistory[idx].down	= remap32(limitVal32(netData->rate.down, 0, maxRate.down), 0, maxRate.down, 0, 255);
 	if(maxRate.up > 0)
-		monitorData->netHistory[idx].up		= remapInt(limitVal(netData->rate.up, 0, maxRate.up), 0, maxRate.up, 0, 255);
+		monitorData->netHistory[idx].up		= remap32(limitVal32(netData->rate.up, 0, maxRate.up), 0, maxRate.up, 0, 255);
 //	monitorData->netHistory[idx].ping		= netData->ping;
 //	monitorData->netHistory[idx].loss		= netData->loss;
 	if(++idx >= CFG_HISTORY_COUNT)

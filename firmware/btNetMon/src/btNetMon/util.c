@@ -12,7 +12,22 @@ int remapInt(int x, int in_min, int in_max, int out_min, int out_max)
 	return (((long)x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min);
 }
 
+int32_t remap32(int32_t x, int32_t in_min, int32_t in_max, int32_t out_min, int32_t out_max)
+{
+	return (((long)x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min);
+}
+
 uint limitVal(uint val, uint min, uint max)
+{
+	if(val < min)
+		return min;
+	else if(val > max)
+		return max;
+	else
+		return val;
+}
+
+uint32_t limitVal32(uint32_t val, uint32_t min, uint32_t max)
 {
 	if(val < min)
 		return min;

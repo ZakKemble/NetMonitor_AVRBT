@@ -1,15 +1,6 @@
 /* * Project: Bluetooth Net Monitor * Author: Zak Kemble, contact@zakkemble.co.uk * Copyright: (C) 2013 by Zak Kemble * License: GNU GPL v3 (see License.txt) * Web: http://blog.zakkemble.co.uk/bluetooth-net-monitor-v2/ */
 
-#include <avr/pgmspace.h>
-#include <stdio.h>
-#include <stdint.h>
 #include "common.h"
-#include "views/mode1.h"
-#include "resources.h"
-#include "draw.h"
-#include "devices/lcd.h"
-#include "colours.h"
-#include "devices/lm73.h"
 
 #define DPLY_SYNC_DOWN_X 2
 #define DPLY_SYNC_DOWN_Y 2
@@ -52,23 +43,27 @@
 static void noinline drawEmail(byte);
 static void noinline drawUsageBar(byte, byte, byte);
 static void noinline drawGraph(s_netHistory*, byte);
+static void noinline drawDot(byte, byte);
 
 // Draw things that are only updated once
 void displayMode1Static(void)
 {
 	setFont(9, 8, numbersSmall, 0x30);
 	setColour(COL_COL1);
-	draw_string(DPLY_SYNC_DOWN_X + 45, DPLY_SYNC_DOWN_Y, "Kbps", 0);
-	draw_string(DPLY_SYNC_UP_X + 45, DPLY_SYNC_UP_Y, "Kbps", 0);
+	draw_string(DPLY_SYNC_DOWN_X + 45 + 3, DPLY_SYNC_DOWN_Y, "Kbps", 0);
+	draw_string(DPLY_SYNC_UP_X + 45 + 3, DPLY_SYNC_UP_Y, "Kbps", 0);
 	draw_string(DPLY_MISC_LOSS_X + 18, DPLY_MISC_LOSS_Y, "%", 0);
 	draw_string(29, DPLY_MISC_PING_Y, "ms", 0);
 	
 	setColour(COL_COL2);
-	draw_string(58, 12, "KB", 0);
-	draw_string(58, 20, "ps", 0);
-	draw_string(58, 60, "KB", 0);
-	draw_string(58, 68, "ps", 0);
+	draw_string(66, 12, "MB", 0);
+	draw_string(66, 20, "ps", 0);
+	draw_string(66, 60, "MB", 0);
+	draw_string(66, 68, "ps", 0);
 	
+	drawDot(DPLY_RATE_DOWN_X+36, DPLY_RATE_DOWN_Y+8);
+	drawDot(DPLY_RATE_UP_X+36, DPLY_RATE_UP_Y+8);
+
 	// Graph border
 	setColour(COL_GRAPH_BORDER);
 
@@ -105,8 +100,8 @@ void displayMode1(s_monitorData* monitorData)
 	// Down/up sync
 	setFont(9, 8, numbersSmall, 0x30);
 	setColour(COL_COL1);
-	draw_string_num(DPLY_SYNC_DOWN_X, DPLY_SYNC_DOWN_Y, monitorData->netData.sync.down, 4);
-	draw_string_num(DPLY_SYNC_UP_X, DPLY_SYNC_UP_Y, monitorData->netData.sync.up, 4);
+	draw_string_num(DPLY_SYNC_DOWN_X, DPLY_SYNC_DOWN_Y, monitorData->netData.sync.down, 5);
+	draw_string_num(DPLY_SYNC_UP_X, DPLY_SYNC_UP_Y, monitorData->netData.sync.up, 5);
 	draw_string_num(DPLY_MISC_LOSS_X, DPLY_MISC_LOSS_Y, monitorData->netData.loss, 2);
 
 	// IP
@@ -131,17 +126,30 @@ void displayMode1(s_monitorData* monitorData)
 	// Current down/up rates
 	setFont(18, 16, numbersLarge, 0x30);
 	setColour(COL_COL2);
-	draw_string_num(DPLY_RATE_DOWN_X, DPLY_RATE_DOWN_Y, monitorData->netData.rate.down, 3);
-	draw_string_num(DPLY_RATE_UP_X, DPLY_RATE_UP_Y, monitorData->netData.rate.up, 3);
+
+	wholeFrac_s mb;
+
+	// Download rate
+	draw_KBToMBWholeFrac(monitorData->netData.rate.down, &mb);
+	draw_string_num(DPLY_RATE_DOWN_X, DPLY_RATE_DOWN_Y, mb.whole, 2);
+	draw_string_num(DPLY_RATE_DOWN_X+36+8, DPLY_RATE_DOWN_Y, mb.frac, 1);
+
+	// Upload rate
+	draw_KBToMBWholeFrac(monitorData->netData.rate.up, &mb);
+	draw_string_num(DPLY_RATE_UP_X, DPLY_RATE_UP_Y, mb.whole, 2);
+	draw_string_num(DPLY_RATE_UP_X+36+8, DPLY_RATE_UP_Y, mb.frac, 1);
+
+	//draw_string_num(DPLY_RATE_DOWN_X, DPLY_RATE_DOWN_Y, monitorData->netData.rate.down, 3);
+	//draw_string_num(DPLY_RATE_UP_X, DPLY_RATE_UP_Y, monitorData->netData.rate.up, 3);
 
 	// Email notification
 	drawEmail(monitorData->emails);
 
 	// Usage bars
 	byte usage;
-	usage = limitVal(((monitorData->netData.rate.down / (float)(monitorData->netData.maxRate.down + 1)) * 6) + 0.5, 0, 6);
+	usage = limitVal32(((monitorData->netData.rate.down / (float)(monitorData->netData.maxRate.down + 1)) * 6) + 0.5, 0, 6);
 	drawUsageBar(2, 29, usage);
-	usage = limitVal(((monitorData->netData.rate.up / (float)(monitorData->netData.maxRate.up + 1)) * 6) + 0.5, 0, 6);
+	usage = limitVal32(((monitorData->netData.rate.up / (float)(monitorData->netData.maxRate.up + 1)) * 6) + 0.5, 0, 6);
 	drawUsageBar(2, 77, usage);
 }
 
@@ -270,4 +278,19 @@ static void noinline drawGraph(s_netHistory* netHistory, byte netHistoryLatest)
 		}
 	}
 	lcd_setRotation(ROTATION_NORMAL);
+}
+
+static void noinline drawDot(byte x, byte y)
+{
+	setLocation(x, y, 6, 8);
+
+	LCD_SELECT(MODE_DATA)
+	{
+		for(byte i=0;i<6*8;i++)
+		{
+			byte intensity = pgm_read_byte(&fontDotLarge[i]);
+			uint pixel = calcColour(intensity);
+			sendPixel(pixel);
+		}
+	}
 }

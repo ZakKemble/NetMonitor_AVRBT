@@ -1,0 +1,1 @@
+/* * Project: Bluetooth Net Monitor * Author: Zak Kemble, contact@zakkemble.co.uk * Copyright: (C) 2014 by Zak Kemble * License: GNU GPL v3 (see License.txt) * Web: http://blog.zakkemble.co.uk/bluetooth-net-monitor-v2/ */#ifndef RFCOMM_H_#define RFCOMM_H_void rfcomm_init(void);void rfcomm_end(void);void rfcomm_send(void*, size_t);#endif /* RFCOMM_H_ */

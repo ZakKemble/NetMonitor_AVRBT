@@ -2,13 +2,13 @@
 
 # This should be an acual 'make' file...
 
-FILES=( main email adsl serial updater ping iface config )
+FILES=( main email modem serial updater ping iface config rfcomm )
 
 COMPILER="gcc"
 COMPILE_OPTIONS="-c -Wall -Wextra -Wstrict-prototypes -Wunused-result -O3 -std=c99 -fmessage-length=0"
 
 LINKER="gcc"
-LINKER_OPTIONS="-L/usr/lib -lpthread -lcurl -loping -s -Wl,--gc-sections"
+LINKER_OPTIONS="-L/usr/lib -lpthread -lcurl -loping -lbluetooth -s -Wl,--gc-sections"
 
 OUT="btnetmon"
 

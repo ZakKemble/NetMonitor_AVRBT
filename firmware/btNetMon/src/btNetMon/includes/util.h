@@ -3,7 +3,8 @@
 #ifndef UTIL_H_
 #define UTIL_H_
 
-#include "typedefs.h"
+#define UNUSED(var) ((void)(var))
+#define EMPTY_FUNC	((void)(0))
 
 #define noinline __attribute__ ((__noinline__))
 
@@ -51,8 +52,8 @@
 #define INPUT			bit_clr_concat
 #define pinMode(x, s)	s(DDR, x)
 
-#define PULLUP_ENABLE	bit_set_concat
-#define PULLUP_DISABLE	bit_clr_concat
+#define PU_EN			bit_set_concat
+#define PU_DIS			bit_clr_concat
 #define pinPullup(x, s) s(PORT, x)
 
 #define PINHIGH			true
@@ -63,9 +64,5 @@
 #define bits_clr(data, bits)	((data) &= (~(bits)))
 #define bit_set(data, x)		bits_set((data), _BV(x))
 #define bit_clr(data, x)		bits_clr((data), _BV(x))
-
-byte remap(byte, byte, byte, byte, byte);
-int remapInt(int, int, int, int, int);
-uint limitVal(uint, uint, uint);
 
 #endif /* UTIL_H_ */

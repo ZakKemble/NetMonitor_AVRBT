@@ -1,12 +1,6 @@
 /* * Project: Bluetooth Net Monitor * Author: Zak Kemble, contact@zakkemble.co.uk * Copyright: (C) 2013 by Zak Kemble * License: GNU GPL v3 (see License.txt) * Web: http://blog.zakkemble.co.uk/bluetooth-net-monitor-v2/ */
 
-#include <avr/io.h>
 #include "common.h"
-#include "devices/buttons.h"
-#include "devices/lcd.h"
-#include "display.h"
-#include "btNetMon.h"
-#include "millis/millis.h"
 
 #define BTN	C1
 
@@ -22,7 +16,7 @@ static void changeMode(millis_t*, bool*);
 
 void buttons_init()
 {
-	pinPullup(BTN, PULLUP_ENABLE);
+	pinPullup(BTN, PU_EN);
 }
 
 void buttons_update()

@@ -1,18 +1,14 @@
 /* * Project: Bluetooth Net Monitor * Author: Zak Kemble, contact@zakkemble.co.uk * Copyright: (C) 2013 by Zak Kemble * License: GNU GPL v3 (see License.txt) * Web: http://blog.zakkemble.co.uk/bluetooth-net-monitor-v2/ */
 
-#include <stdlib.h>
-#include <string.h>
 #include "common.h"
-#include "draw.h"
-#include "resources.h"
 
 s_font fontData;
 s_colour colour;
 
-static byte numDigits(uint);
+static byte numDigits(ulong);
 static inline void drawChar(byte, byte, char);
 
-static byte numDigits(uint num)
+static byte numDigits(ulong num)
 {
 	if(num == 0)
 		return 1;
@@ -25,16 +21,16 @@ static byte numDigits(uint num)
 	return digits;
 }
 
-void draw_string_num(byte x, byte y, uint num, byte digitCount)
+void draw_string_num(byte x, byte y, ulong num, byte digitCount)
 {
 	byte digits = numDigits(num);
 
 	if(digits > digitCount)
 		digits = digitCount;
 
-	char buff[6];
+	char buff[12];
 	memset(buff, ' ', sizeof(buff) - 1);
-	itoa(num, buff + (digitCount - digits), 10);
+	ultoa(num, buff + (digitCount - digits), 10);
 
 	draw_string(x, y, buff, 0);
 }
@@ -95,6 +91,9 @@ static inline void drawChar(byte x, byte y, char c)
 			case 'm':
 				c = 12;
 				break;
+			case 'M':
+				c = 17;
+				break;
 			case 's':
 				c = 14;
 				break;
@@ -142,11 +141,16 @@ static inline void drawChar(byte x, byte y, char c)
 	{
 		LCD_SELECT(MODE_DATA)
 		{
-			for(uint i=0;i<size;i++)
+			uint pixel = calcColour(pgm_read_byte(font + (c * size)));
+			
+			for(uint i=1;i<size;i++)
 			{
-				byte intensity = pgm_read_byte(font + (c * size) + i);
-				uint pixel = calcColour(intensity);
-				sendPixel(pixel);
+				SPDR = pixel>>8;
+				__builtin_avr_delay_cycles(33);
+				SPSR;
+				SPDR = pixel;
+				pixel = calcColour(pgm_read_byte(font + (c * size) + i));
+				loop_until_bit_is_set(SPSR, SPIF);
 			}
 		}
 	}
@@ -187,6 +191,22 @@ void draw_graphBar(byte maxLen, byte barSize)
 			sendPixel(pixel);
 		}
 	}
+}
+
+void draw_KBToMBWholeFrac(int32_t in, wholeFrac_s* out)
+{
+	float mbs = in / 1024.0;
+	byte whole = mbs;
+	byte frac = round((mbs - whole) * 10);
+
+	if(frac > 9)
+		frac = 9;
+
+	if(whole > 99)
+		whole = 99;
+
+	out->whole = whole;
+	out->frac = frac;
 }
 
 /*

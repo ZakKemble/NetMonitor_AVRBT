@@ -1,42 +1,22 @@
 /*
  * Project: Lightweight millisecond tracking library
- * Author: Zak Kemble, me@zakkemble.co.uk
+ * Author: Zak Kemble, contact@zakkemble.co.uk
  * Copyright: (C) 2013 by Zak Kemble
  * License: GNU GPL v3 (see License.txt)
  * Web: http://blog.zakkemble.co.uk/millisecond-tracking-library-for-avr/
  */
 
-// Set data type
-// Data type			- Max time span			- Memory used
-// unsigned char		- 255 milliseconds		- 1 byte
-// unsigned int			- 65.54 seconds			- 2 bytes
-// unsigned long		- 49.71 days			- 4 bytes
-// unsigned long long	- 584.9 million years	- 8 bytes
-typedef unsigned int millis_t;
+#ifndef MILLIS_H_
+#define MILLIS_H_
 
-// Don't use alias if library is being used with Arduino, since millis() is already used
-#ifndef ARDUINO
-	#define millis() millis_get()
-#endif
+#include "millis_config.h"
 
-// Initialize library
+typedef unsigned char millis8_t;
+typedef MILLIS_DATATYPE millis_t;
+
+#define millis() millis_get()
+
 void millis_init(void);
-
-// Get current milliseconds
 millis_t millis_get(void);
-/*
-// Turn on timer and resume time keeping
-void millis_resume(void);
 
-// Pause time keeping and turn off timer to save power
-void millis_pause(void);
-
-// Reset milliseconds count to 0
-void millis_reset(void);
-
-// Add time
-void millis_add(millis_t);
-
-// Subtract time
-void millis_subtract(millis_t);
-*/
+#endif /* MILLIS_H_ */

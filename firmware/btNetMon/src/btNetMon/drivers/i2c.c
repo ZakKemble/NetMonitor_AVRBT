@@ -1,11 +1,6 @@
 /* * Project: Bluetooth Net Monitor * Author: Zak Kemble, contact@zakkemble.co.uk * Copyright: (C) 2013 by Zak Kemble * License: GNU GPL v3 (see License.txt) * Web: http://blog.zakkemble.co.uk/bluetooth-net-monitor-v2/ */
 
-#include <avr/io.h>
-#include <avr/power.h>
-#include <util/delay.h>
-#include <util/twi.h>
 #include "common.h"
-#include "drivers/i2c.h"
 
 #define SDA			C4
 #define SDL			C5
@@ -27,7 +22,7 @@ void i2c_resetState()
 {
 	bit_clr(TWCR, TWEN);
 	pinMode(SDA, INPUT);
-	pinPullup(SDA, PULLUP_ENABLE);
+	pinPullup(SDA, PU_EN);
 	delay(1);
 
 	// Toggle SDL until SDA goes HIGH or times out

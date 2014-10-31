@@ -6,14 +6,7 @@
  * Web: http://blog.zakkemble.co.uk/bluetooth-net-monitor-v2/
  */
 
-#define _POSIX_C_SOURCE 200809L
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include "typedefs.h"
-#include "config.h"
+#include "common.h"
 
 // Linked list for storing key/value pairs
 typedef struct keyVal_s keyVal_s;
@@ -27,6 +20,8 @@ static keyVal_s* keyValList;
 
 static bool loadConfig(const char*);
 static void add(char*, char*);
+
+// use for() loops instead of while() loops!
 
 void config_init(const char* file)
 {
@@ -63,6 +58,9 @@ void config_val(char* key, char** val)
 		{
 			if(*val == NULL)
 				*val = malloc(strlen(keyVal->val) + 1);
+			
+			// Check that the val buffer is big enough!
+			
 			strcpy(*val, keyVal->val);
 			return;
 		}

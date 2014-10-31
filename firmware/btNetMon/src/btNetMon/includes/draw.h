@@ -3,18 +3,16 @@
 #ifndef DRAW_H_
 #define DRAW_H_
 
-#include "devices/lcd.h"
-#include "drivers/spi.h"
-
 // Floats are slow so instead we use large integers
 #define PRECISION	6
 
 extern s_font fontData;
 extern s_colour colour;
 
-void draw_string_num(byte, byte, uint, byte);
+void draw_string_num(byte, byte, ulong, byte);
 void draw_string(byte, byte, const char*, byte);
 void draw_graphBar(byte, byte);
+void draw_KBToMBWholeFrac(int32_t, wholeFrac_s*);
 
 inline void setColour(byte r, byte g, byte b)
 {
