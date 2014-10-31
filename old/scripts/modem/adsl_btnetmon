@@ -1,0 +1,16 @@
+#!/bin/sh
+#
+# Project: Bluetooth Net Monitor
+# Author: Zak Kemble, me@zakkemble.co.uk
+# Copyright: (C) 2013 by Zak Kemble
+# License: GNU GPL v3 (see License.txt)
+# Web: http://blog.zakkemble.co.uk/bluetooth-net-monitor/
+
+echo
+DSLDATA=$(cat /proc/avalanche/avsar_modem_stats | grep Connection)
+
+# Down speed
+echo "$DSLDATA" | cut -s -f 5
+
+# Up speed
+echo "$DSLDATA" | cut -s -f 3

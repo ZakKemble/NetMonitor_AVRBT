@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Atmel Studio Solution File, Format Version 11.00
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "USBaspLoader", "USBaspLoader\USBaspLoader.cproj", "{E7A09913-D7F5-43B4-A043-7EDEBCD6F96E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AVR = Debug|AVR
+		Release|AVR = Release|AVR
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E7A09913-D7F5-43B4-A043-7EDEBCD6F96E}.Debug|AVR.ActiveCfg = Debug|AVR
+		{E7A09913-D7F5-43B4-A043-7EDEBCD6F96E}.Debug|AVR.Build.0 = Debug|AVR
+		{E7A09913-D7F5-43B4-A043-7EDEBCD6F96E}.Release|AVR.ActiveCfg = Release|AVR
+		{E7A09913-D7F5-43B4-A043-7EDEBCD6F96E}.Release|AVR.Build.0 = Release|AVR
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

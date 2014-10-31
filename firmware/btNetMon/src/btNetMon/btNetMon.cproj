@@ -1,0 +1,261 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>6.0</ProjectVersion>
+    <ToolchainName>com.Atmel.AVRGCC8</ToolchainName>
+    <ProjectGuid>{647ac912-9e70-4549-8967-8ace4c9f235b}</ProjectGuid>
+    <avrdevice>ATmega328P</avrdevice>
+    <avrdeviceseries>none</avrdeviceseries>
+    <OutputType>Executable</OutputType>
+    <Language>C</Language>
+    <OutputFileName>$(MSBuildProjectName)</OutputFileName>
+    <OutputFileExtension>.elf</OutputFileExtension>
+    <OutputDirectory>$(MSBuildProjectDirectory)\$(Configuration)</OutputDirectory>
+    <AssemblyName>btNetMon</AssemblyName>
+    <Name>btNetMon</Name>
+    <RootNamespace>btNetMon</RootNamespace>
+    <ToolchainFlavour>AVR-GCC 4.7.2</ToolchainFlavour>
+    <KeepTimersRunning>true</KeepTimersRunning>
+    <OverrideVtor>false</OverrideVtor>
+    <OverrideVtorValue />
+    <eraseonlaunchrule>0</eraseonlaunchrule>
+    <AsfVersion>3.1.3</AsfVersion>
+    <avrtool />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <ToolchainSettings>
+      <AvrGcc>
+  <avrgcc.common.outputfiles.hex>True</avrgcc.common.outputfiles.hex>
+  <avrgcc.common.outputfiles.lss>True</avrgcc.common.outputfiles.lss>
+  <avrgcc.common.outputfiles.eep>True</avrgcc.common.outputfiles.eep>
+  <avrgcc.common.outputfiles.srec>True</avrgcc.common.outputfiles.srec>
+  <avrgcc.compiler.general.SubroutinesFunctionPrologues>True</avrgcc.compiler.general.SubroutinesFunctionPrologues>
+  <avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>True</avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>
+  <avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>True</avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>
+  <avrgcc.compiler.symbols.DefSymbols>
+    <ListValues>
+      <Value>F_CPU=20000000UL</Value>
+      <Value>CPU_DIV=clock_div_1</Value>
+    </ListValues>
+  </avrgcc.compiler.symbols.DefSymbols>
+  <avrgcc.compiler.directories.IncludePaths>
+    <ListValues>
+      <Value>../includes</Value>
+    </ListValues>
+  </avrgcc.compiler.directories.IncludePaths>
+  <avrgcc.compiler.optimization.level>Optimize more (-O2)</avrgcc.compiler.optimization.level>
+  <avrgcc.compiler.optimization.OtherFlags>-fno-tree-scev-cprop -ffreestanding</avrgcc.compiler.optimization.OtherFlags>
+  <avrgcc.compiler.optimization.PackStructureMembers>True</avrgcc.compiler.optimization.PackStructureMembers>
+  <avrgcc.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcc.compiler.optimization.AllocateBytesNeededForEnum>
+  <avrgcc.compiler.warnings.AllWarnings>True</avrgcc.compiler.warnings.AllWarnings>
+  <avrgcc.compiler.miscellaneous.OtherFlags>-std=gnu99 -Wstrict-prototypes -Wextra</avrgcc.compiler.miscellaneous.OtherFlags>
+  <avrgcc.linker.libraries.Libraries>
+    <ListValues>
+      <Value>m</Value>
+    </ListValues>
+  </avrgcc.linker.libraries.Libraries>
+  <avrgcc.linker.optimization.RelaxBranches>True</avrgcc.linker.optimization.RelaxBranches>
+  <avrgcc.assembler.general.AssemblerFlags>-DF_CPU=20000000UL</avrgcc.assembler.general.AssemblerFlags>
+</AvrGcc>
+    </ToolchainSettings>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <ToolchainSettings>
+      <AvrGcc>
+        <avrgcc.common.outputfiles.hex>True</avrgcc.common.outputfiles.hex>
+        <avrgcc.common.outputfiles.lss>True</avrgcc.common.outputfiles.lss>
+        <avrgcc.common.outputfiles.eep>True</avrgcc.common.outputfiles.eep>
+        <avrgcc.common.outputfiles.srec>True</avrgcc.common.outputfiles.srec>
+        <avrgcc.compiler.general.SubroutinesFunctionPrologues>True</avrgcc.compiler.general.SubroutinesFunctionPrologues>
+        <avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>True</avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>
+        <avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>True</avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>
+        <avrgcc.compiler.symbols.DefSymbols>
+          <ListValues>
+            <Value>F_CPU=20000000UL</Value>
+            <Value>CPU_DIV=clock_div_1</Value>
+          </ListValues>
+        </avrgcc.compiler.symbols.DefSymbols>
+        <avrgcc.compiler.directories.IncludePaths>
+          <ListValues>
+            <Value>../includes</Value>
+          </ListValues>
+        </avrgcc.compiler.directories.IncludePaths>
+        <avrgcc.compiler.optimization.level>Optimize more (-O2)</avrgcc.compiler.optimization.level>
+        <avrgcc.compiler.optimization.OtherFlags>-fno-tree-scev-cprop -ffreestanding</avrgcc.compiler.optimization.OtherFlags>
+        <avrgcc.compiler.optimization.PackStructureMembers>True</avrgcc.compiler.optimization.PackStructureMembers>
+        <avrgcc.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcc.compiler.optimization.AllocateBytesNeededForEnum>
+        <avrgcc.compiler.optimization.DebugLevel>Default (-g2)</avrgcc.compiler.optimization.DebugLevel>
+        <avrgcc.compiler.warnings.AllWarnings>True</avrgcc.compiler.warnings.AllWarnings>
+        <avrgcc.compiler.miscellaneous.OtherFlags>-std=gnu99 -Wstrict-prototypes -Wextra</avrgcc.compiler.miscellaneous.OtherFlags>
+        <avrgcc.linker.libraries.Libraries>
+          <ListValues>
+            <Value>m</Value>
+          </ListValues>
+        </avrgcc.linker.libraries.Libraries>
+        <avrgcc.linker.optimization.RelaxBranches>True</avrgcc.linker.optimization.RelaxBranches>
+        <avrgcc.assembler.general.AssemblerFlags>-DF_CPU=20000000UL</avrgcc.assembler.general.AssemblerFlags>
+        <avrgcc.assembler.debugging.DebugLevel>Default (-Wa,-g)</avrgcc.assembler.debugging.DebugLevel>
+      </AvrGcc>
+    </ToolchainSettings>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="btNetMon.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="devices\bluetooth.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="devices\buttons.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="devices\lcd.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="devices\lm73.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="display.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="includes\views\mode3.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="views\mode1.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="views\mode2.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="views\mode3.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="draw.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="drivers\i2c.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="drivers\spi.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="drivers\uart.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="includes\btNetMon.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="includes\colours.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="includes\devices\buttons.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="includes\devices\lcd_defs.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="includes\devices\lm73.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="includes\devices\lm73_defs.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="includes\display.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="includes\views\mode1.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="includes\views\mode2.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="includes\draw.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="includes\drivers\i2c.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="includes\millis\millis.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="includes\resources.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="includes\usb.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="resources.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="includes\common.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="includes\config.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="includes\devices\bluetooth.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="includes\devices\lcd.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="includes\drivers\spi.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="includes\drivers\uart.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="includes\typedefs.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="includes\util.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="millis\millis.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="usb.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="usbdrv\oddebug.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="usbdrv\oddebug.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="usbdrv\usbconfig.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="usbdrv\usbdrv.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="usbdrv\usbdrv.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="usbdrv\usbdrvasm.S">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="usbdrv\usbportability.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="util.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <None Include="usbdrv\usbdrvasm.asm">
+      <SubType>compile</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="views" />
+    <Folder Include="includes\drivers" />
+    <Folder Include="includes\devices" />
+    <Folder Include="includes\views" />
+    <Folder Include="includes\millis" />
+    <Folder Include="millis" />
+    <Folder Include="drivers" />
+    <Folder Include="includes" />
+    <Folder Include="devices" />
+    <Folder Include="usbdrv" />
+  </ItemGroup>
+  <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
+</Project>

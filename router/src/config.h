@@ -1,0 +1,1 @@
+/* * Project: Bluetooth Net Monitor * Author: Zak Kemble, contact@zakkemble.co.uk * Copyright: (C) 2013 by Zak Kemble * License: GNU GPL v3 (see License.txt) * Web: http://blog.zakkemble.co.uk/bluetooth-net-monitor-v2/ */#ifndef CONFIG_H_#define CONFIG_H_void config_init(const char*);void config_end(void);void config_val(char*, char**);#endif /* CONFIG_H_ */

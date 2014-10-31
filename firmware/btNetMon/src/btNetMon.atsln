@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Atmel Studio Solution File, Format Version 11.00
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "btNetMon", "btNetMon\btNetMon.cproj", "{647AC912-9E70-4549-8967-8ACE4C9F235B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AVR = Debug|AVR
+		Release|AVR = Release|AVR
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{647AC912-9E70-4549-8967-8ACE4C9F235B}.Debug|AVR.ActiveCfg = Debug|AVR
+		{647AC912-9E70-4549-8967-8ACE4C9F235B}.Debug|AVR.Build.0 = Debug|AVR
+		{647AC912-9E70-4549-8967-8ACE4C9F235B}.Release|AVR.ActiveCfg = Release|AVR
+		{647AC912-9E70-4549-8967-8ACE4C9F235B}.Release|AVR.Build.0 = Release|AVR
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
